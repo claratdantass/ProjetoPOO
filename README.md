@@ -50,6 +50,8 @@ Este projeto tem como objetivo criar um sistema para o cadastro e catalogação 
 
  ´´cd projeto-catalogacao-gatos
 
-3 - Abra o projeto em sua IDE preferida (como IntelliJ IDEA, Eclipse, etc.).
+3 -## Dependências
+
+- Baixe o driver JDBC do PostgreSQL (postgresql-42.x.x.jar) em https://jdbc.postgresql.org/download.html e coloque-o no diretório raiz do projeto.
 
 4 - Execute a classe principal (Main) ou a classe com a interface gráfica para iniciar o sistema.
