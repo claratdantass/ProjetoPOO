@@ -1,101 +1,137 @@
 package com.catalogogatos.service;
 
 import com.catalogogatos.model.Gato;
-import java.io.*;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 public class GatoService {
-    private static final String ARQUIVO_GATOS = "gatos.dat";
-    private static Long proximoId = 1L;
-    private List<Gato> gatos;
-    
-    public GatoService() {
-        this.gatos = carregarGatos();
-        if (this.gatos.size() > 0) {
-            proximoId = this.gatos.stream()
-                    .mapToLong(Gato::getId)
-                    .max()
-                    .getAsLong() + 1;
-        }
+    private static final String JDBC_URL = "jdbc:postgresql://localhost:5432/poo_postegres";
+    private static final String JDBC_USER = "postgres";
+    private static final String JDBC_PASSWORD = "postgres";
+
+    private Connection getConnection() throws SQLException {
+        return DriverManager.getConnection(JDBC_URL, JDBC_USER, JDBC_PASSWORD);
     }
-    
 
     public Gato adicionarGato(Gato gato) {
-        gato.setId(proximoId++);
-        gatos.add(gato);
-        salvarGatos();
+        String sql = "INSERT INTO animais (nome, idade, sexo, descricao, saude, vacinado, castrado, imagem, disponivel_para_adocao) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?) RETURNING id";
+        try (Connection conn = getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+            stmt.setString(1, gato.getNome());
+            stmt.setInt(2, 0); 
+            stmt.setString(3, gato.getSexo());
+            stmt.setString(4, gato.getDescricao());
+            stmt.setString(5, "");
+            stmt.setBoolean(6, false); 
+            stmt.setBoolean(7, gato.isCastrado());
+            stmt.setNull(8, Types.BINARY); 
+            stmt.setBoolean(9, !gato.isAdotado());
+            ResultSet rs = stmt.executeQuery();
+            if (rs.next()) {
+                gato.setId(rs.getLong(1));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
         return gato;
     }
-    
 
     public List<Gato> obterTodosGatos() {
-        return new ArrayList<>(gatos);
+        List<Gato> gatos = new ArrayList<>();
+        String sql = "SELECT * FROM animais";
+        try (Connection conn = getConnection();
+             Statement stmt = conn.createStatement();
+             ResultSet rs = stmt.executeQuery(sql)) {
+            while (rs.next()) {
+                Gato gato = mapResultSetToGato(rs);
+                gatos.add(gato);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return gatos;
     }
-    
 
     public Optional<Gato> buscarPorId(Long id) {
-        return gatos.stream()
-                .filter(gato -> gato.getId().equals(id))
-                .findFirst();
+        String sql = "SELECT * FROM animais WHERE id = ?";
+        try (Connection conn = getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+            stmt.setLong(1, id);
+            try (ResultSet rs = stmt.executeQuery()) {
+                if (rs.next()) {
+                    return Optional.of(mapResultSetToGato(rs));
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return Optional.empty();
     }
-    
 
     public boolean atualizarGato(Gato gato) {
-        for (int i = 0; i < gatos.size(); i++) {
-            if (gatos.get(i).getId().equals(gato.getId())) {
-                gatos.set(i, gato);
-                salvarGatos();
-                return true;
-            }
+        String sql = "UPDATE animais SET nome = ?, descricao = ?, sexo = ?, castrado = ?, disponivel_para_adocao = ? WHERE id = ?";
+        try (Connection conn = getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+            stmt.setString(1, gato.getNome());
+            stmt.setString(2, gato.getDescricao());
+            stmt.setString(3, gato.getSexo());
+            stmt.setBoolean(4, gato.isCastrado());
+            stmt.setBoolean(5, !gato.isAdotado());
+            stmt.setLong(6, gato.getId());
+            int rows = stmt.executeUpdate();
+            return rows > 0;
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
         return false;
     }
-    
 
     public boolean excluirGato(Long id) {
-        boolean removido = gatos.removeIf(gato -> gato.getId().equals(id));
-        if (removido) {
-            salvarGatos();
+        String sql = "DELETE FROM animais WHERE id = ?";
+        try (Connection conn = getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+            stmt.setLong(1, id);
+            int rows = stmt.executeUpdate();
+            return rows > 0;
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
-        return removido;
+        return false;
     }
-    
 
     public List<Gato> buscarPorNome(String nome) {
-        return gatos.stream()
-                .filter(gato -> gato.getNome().toLowerCase().contains(nome.toLowerCase()))
-                .collect(Collectors.toList());
-    }
-    
-
-    public List<Gato> buscarPorLocal(String local) {
-        return gatos.stream()
-                .filter(gato -> gato.getLocal().toLowerCase().contains(local.toLowerCase()))
-                .collect(Collectors.toList());
-    }
-    
-
-    private void salvarGatos() {
-        try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(ARQUIVO_GATOS))) {
-            oos.writeObject(gatos);
-        } catch (IOException e) {
-            System.err.println("Erro ao salvar gatos: " + e.getMessage());
+        List<Gato> gatos = new ArrayList<>();
+        String sql = "SELECT * FROM animais WHERE LOWER(nome) LIKE ?";
+        try (Connection conn = getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+            stmt.setString(1, "%" + nome.toLowerCase() + "%");
+            try (ResultSet rs = stmt.executeQuery()) {
+                while (rs.next()) {
+                    gatos.add(mapResultSetToGato(rs));
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
+        return gatos;
     }
-    
-    @SuppressWarnings("unchecked")
-    private List<Gato> carregarGatos() {
-        try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream(ARQUIVO_GATOS))) {
-            return (List<Gato>) ois.readObject();
-        } catch (FileNotFoundException e) {
-            System.out.println("Arquivo de gatos não encontrado. Criando nova lista.");
-            return new ArrayList<>();
-        } catch (IOException | ClassNotFoundException e) {
-            System.err.println("Erro ao carregar gatos: " + e.getMessage());
-            return new ArrayList<>();
-        }
+
+    private Gato mapResultSetToGato(ResultSet rs) throws SQLException {
+        Gato gato = new Gato();
+        gato.setId(rs.getLong("id"));
+        gato.setNome(rs.getString("nome"));
+        gato.setDescricao(rs.getString("descricao"));
+        gato.setSexo(rs.getString("sexo"));
+        gato.setCastrado(rs.getBoolean("castrado"));
+
+        gato.setLocal("");
+        gato.setCorPelagem("");
+        gato.setCaminhoImagem(null);
+
+        boolean disponivel = rs.getBoolean("disponivel_para_adocao");
+        gato.setAdotado(!disponivel);
+        return gato;
     }
 }

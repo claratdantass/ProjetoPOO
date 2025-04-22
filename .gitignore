@@ -1,0 +1,4 @@
+# Ignore JDBC drivers and other jars
+postgresql-*.jar
+*.jar
+postgresql-42.7.5.jar
