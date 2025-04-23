@@ -79,21 +79,21 @@ public class CatalogoView {
         root.setCenter(mainContainer);
     }
 
-    public void atualizarCatalogo() {
-        galeriaGatos.getChildren().clear();
+ public void atualizarCatalogo() {
+    galeriaGatos.getChildren().clear();
 
-        List<Gato> gatos = controller.getGatosObservable();
+    List<Gato> gatos = controller.getGatosObservable();
 
-        if (gatos.isEmpty()) {
-            Label lblVazio = new Label("Nenhum gato cadastrado.");
-            lblVazio.setStyle("-fx-font-size: 16px;");
-            galeriaGatos.getChildren().add(lblVazio);
-        } else {
-            for (Gato gato : gatos) {
-                galeriaGatos.getChildren().add(criarCardGato(gato));
-            }
+    if (gatos.isEmpty()) {
+        Label lblVazio = new Label("Nenhum gato cadastrado.");
+        lblVazio.setStyle("-fx-font-size: 16px;");
+        galeriaGatos.getChildren().add(lblVazio);
+    } else {
+        for (Gato gato : gatos) {
+            galeriaGatos.getChildren().add(criarCardGato(gato));
         }
     }
+}
 
     private VBox criarCardGato(Gato gato) {
         VBox card = new VBox(10);

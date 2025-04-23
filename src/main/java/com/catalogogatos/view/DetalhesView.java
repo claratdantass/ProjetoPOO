@@ -31,7 +31,7 @@ public class DetalhesView {
     private final CheckBox chkCastrado;
     private final RadioButton rbtnMacho;
     private final RadioButton rbtnFemea;
-    ;
+    
     public DetalhesView(MainController controller, Gato gato) {
         this.controller = controller;
         this.gato = gato;

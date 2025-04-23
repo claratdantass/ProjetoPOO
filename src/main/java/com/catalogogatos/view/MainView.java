@@ -61,6 +61,7 @@ public class MainView {
     }
 
     private void mostrarCatalogo() {
+        catalogoView.atualizarCatalogo();
         BorderPane catalogoScreen = new BorderPane();
         Button btnVoltarCatalogo = new Button("Voltar");
         btnVoltarCatalogo.setOnAction(e -> voltarTelaInicial());
