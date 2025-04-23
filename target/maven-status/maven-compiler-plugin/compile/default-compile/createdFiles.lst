@@ -1,0 +1,8 @@
+com/catalogogatos/view/MainView.class
+com/catalogogatos/view/CadastroView.class
+com/catalogogatos/view/DetalhesView.class
+com/catalogogatos/service/GatoService.class
+com/catalogogatos/Main.class
+com/catalogogatos/model/Gato.class
+com/catalogogatos/view/CatalogoView.class
+com/catalogogatos/controller/MainController.class
