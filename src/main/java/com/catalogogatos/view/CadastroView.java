@@ -9,6 +9,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
 import javafx.scene.shape.Rectangle;
 import javafx.stage.FileChooser;
+import com.catalogogatos.model.Gato;
 
 import java.io.File;
 import java.nio.file.Files;
@@ -52,69 +53,76 @@ public class CadastroView {
     }
 
     private void setupUI() {
-        VBox mainContainer = new VBox(20);
-        mainContainer.setPadding(new Insets(20));
+        VBox mainContainer = new VBox(30);
+        mainContainer.setPadding(new Insets(30, 40, 30, 40));
         mainContainer.setAlignment(Pos.CENTER);
+        mainContainer.setStyle("-fx-background-color: #eaf6fb; -fx-border-color: #2980b9; -fx-border-width: 2px; -fx-border-radius: 12px;");
 
-        Label lblTitulo = new Label("Formulário de Cadastro");
-        lblTitulo.setStyle("-fx-font-size: 18px; -fx-font-weight: bold;");
+        Label lblTitulo = new Label("Formulário de Cadastro de Gato");
+        lblTitulo.setStyle("-fx-font-size: 22px; -fx-font-weight: bold; -fx-text-fill: #2980b9; -fx-padding: 0 0 10 0;");
 
-        HBox contentContainer = new HBox(20);
-        contentContainer.setAlignment(Pos.CENTER);
+        GridPane form = new GridPane();
+        form.setHgap(20);
+        form.setVgap(16);
+        form.setAlignment(Pos.CENTER);
+        form.setStyle("-fx-background-color: #eaf6fb; -fx-padding: 24px 32px 24px 32px; -fx-border-radius: 8px; -fx-effect: dropshadow(gaussian,rgb(179, 32, 159), 6, 0, 0, 2);");
 
-        VBox imageContainer = new VBox(10);
-        imageContainer.setAlignment(Pos.CENTER);
-        imageView.setFitWidth(200);
-        imageView.setFitHeight(200);
-        imageView.setPreserveRatio(true);
+        form.add(new Label("Nome:"), 0, 0);
+        form.add(new Label("Cor da Pelagem:"), 0, 1);
+        form.add(new Label("Local:"), 0, 2);
+        form.add(new Label("Sexo:"), 0, 3);
+        form.add(new Label("Adotado:"), 0, 4);
+        form.add(new Label("Castrado:"), 0, 5);
+        form.add(new Label("Descrição:"), 0, 6);
 
+        form.add(txtNome, 1, 0);
+        form.add(txtCorPelagem, 1, 1);
+        form.add(txtLocal, 1, 2);
+        HBox sexoContainer = new HBox(16, rbtnMacho, rbtnFemea);
+        sexoContainer.setAlignment(Pos.CENTER_LEFT);
+        form.add(sexoContainer, 1, 3);
+        form.add(chkAdotado, 1, 4);
+        form.add(chkCastrado, 1, 5);
+        txtDescricao.setPrefRowCount(3);
+        txtDescricao.setPrefWidth(230);
+        form.add(txtDescricao, 1, 6);
+
+        VBox imageBox = new VBox(12);
+        imageBox.setAlignment(Pos.CENTER);
+        imageView.setFitWidth(120);
+        imageView.setFitHeight(120);
+        imageView.setPreserveRatio(false);
+        imageBox.setStyle("-fx-background-color: #eaf6fb; " +
+                "-fx-padding: 10px; " +
+                "-fx-border-radius: 10px; " +
+                "-fx-border-color: rgba(242,148,230,0.45); " +
+                "-fx-border-width: 2px; " +
+                "-fx-effect: dropshadow(gaussian, rgba(242,148,230,0.45), 8, 0, 0, 2);");
         try {
             imageView.setImage(new Image(getClass().getResourceAsStream("/placeholder.png")));
         } catch (Exception e) {
-            Rectangle placeholder = new Rectangle(200, 200);
-            placeholder.setStyle("-fx-fill: lightgray; -fx-stroke: gray; -fx-stroke-width: 1;");
-            imageContainer.getChildren().add(placeholder);
+            Rectangle placeholder = new Rectangle(120, 120);
+            placeholder.setStyle("-fx-fill: #eaf6fb; -fx-stroke: rgba(242,148,230,0.45); -fx-stroke-width: 2;");
+            imageBox.getChildren().add(placeholder);
         }
-
-        Button btnUpload = new Button("Upload Imagem");
+        Button btnUpload = new Button("Selecionar Imagem");
+        btnUpload.setStyle("-fx-background-color: rgb(179, 32, 159); -fx-font-weight: bold; -fx-text-fill: #fff; -fx-padding: 7 20; -fx-background-radius: 8px;");
         btnUpload.setOnAction(e -> selecionarImagem());
-        imageContainer.getChildren().addAll(imageView, btnUpload);
-
-        GridPane form = new GridPane();
-        form.setHgap(10);
-        form.setVgap(10);
-        form.setAlignment(Pos.TOP_LEFT);
-
-        form.add(createLabeledField("Nome:", txtNome), 0, 0);
-
-        form.add(createLabeledField("Cor da Pelagem:", txtCorPelagem), 0, 1);
-
-        form.add(createLabeledField("Local:", txtLocal), 0, 2);
-
-        form.add(new Label("Sexo:"), 0, 3);
-        HBox sexoContainer = new HBox(10, rbtnMacho, rbtnFemea);
-        sexoContainer.setAlignment(Pos.CENTER_LEFT);
-        form.add(sexoContainer, 1, 3);
-
-        form.add(chkAdotado, 1, 4);
-        form.add(chkCastrado, 1, 5);
-
-        form.add(createLabeledField("Descrição:", txtDescricao), 0, 6);
-        txtDescricao.setPrefRowCount(4);
+        imageBox.getChildren().addAll(imageView, btnUpload);
 
         Button btnCadastrar = new Button("Cadastrar");
-        btnCadastrar.setStyle("-fx-background-color: #ff9999;");
+        btnCadastrar.setStyle("-fx-background-color:rgb(242, 148, 230; -fx-text-fill: white; -fx-font-size: 15px; -fx-font-weight: bold; -fx-padding: 10 32; -fx-background-radius: 8px;");
         btnCadastrar.setOnAction(e -> cadastrarGato());
-
         HBox buttonBox = new HBox(btnCadastrar);
         buttonBox.setAlignment(Pos.CENTER_RIGHT);
+        buttonBox.setPadding(new Insets(12,0,0,0));
         form.add(buttonBox, 1, 7);
 
-        contentContainer.getChildren().addAll(imageContainer, form);
+        HBox contentBox = new HBox(36);
+        contentBox.setAlignment(Pos.CENTER);
+        contentBox.getChildren().addAll(imageBox, form);
 
-        mainContainer.getChildren().addAll(lblTitulo, contentContainer);
-        mainContainer.setStyle("-fx-background-color: #ffcccc;");
-
+        mainContainer.getChildren().addAll(lblTitulo, contentBox);
         root.setCenter(mainContainer);
     }
 
@@ -171,11 +179,23 @@ public class CadastroView {
                 caminhoImagem = destino.toString();
             }
 
-            boolean adotado = chkAdotado.isSelected();
             String sexo = rbtnMacho.isSelected() ? "Macho" : "Fêmea";
             boolean castrado = chkCastrado.isSelected();
 
-            controller.adicionarGato(nome, corPelagem, sexo, adotado, castrado, local, descricao, caminhoImagem);
+            Gato gato = new Gato();
+            gato.setNome(nome);
+            gato.setCorPelagem(corPelagem);
+            gato.setSexo(sexo);
+            gato.setCastrado(castrado);
+            gato.setLocal(local);
+            gato.setDescricao(descricao);
+            gato.setCaminhoImagem(caminhoImagem);
+
+            if (chkAdotado.isSelected()) {
+                gato.adotar();
+            }
+
+            controller.adicionarGato(gato);
 
             txtNome.clear();
             txtCorPelagem.clear();

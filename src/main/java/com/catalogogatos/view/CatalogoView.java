@@ -44,68 +44,76 @@ public class CatalogoView {
     }
 
     private void setupUI() {
-        VBox mainContainer = new VBox(20);
-        mainContainer.setPadding(new Insets(20));
+        VBox mainContainer = new VBox(24);
+        mainContainer.setPadding(new Insets(30, 40, 30, 40));
+        mainContainer.setAlignment(Pos.CENTER);
+        mainContainer.setStyle("-fx-background-color: #f7f7f7;");
 
-        HBox pesquisaBox = new HBox(10);
+        HBox pesquisaBox = new HBox(14);
         pesquisaBox.setAlignment(Pos.CENTER);
+        pesquisaBox.setStyle("-fx-background-color: #fff; -fx-padding: 18 24 18 24; -fx-border-color: #e0e0e0; -fx-border-width: 1px;");
 
-        txtPesquisaNome.setPromptText("Pesquisa por nome");
-        txtPesquisaNome.setPrefWidth(200);
-        
+        txtPesquisaNome.setPromptText("Pesquisar por nome");
+        txtPesquisaNome.setPrefWidth(180);
+        txtPesquisaNome.setStyle("-fx-background-color: #fff; -fx-border-color: #e0e0e0; -fx-border-width: 1px;");
+
         txtDescricao.setPromptText("Descrição (opcional)");
-        txtDescricao.setPrefWidth(200);
+        txtDescricao.setPrefWidth(180);
+        txtDescricao.setStyle("-fx-background-color: #fff; -fx-border-color: #e0e0e0; -fx-border-width: 1px;");
 
         Button btnPesquisar = new Button("Pesquisar");
         btnPesquisar.setOnAction(e -> pesquisarGatos());
+        btnPesquisar.setStyle("-fx-background-color: rgb(60, 154, 231); -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 7px; -fx-padding: 7 18;");
 
-        HBox sexoBox = new HBox(10, chkSexoMacho, chkSexoFemea);
+        HBox sexoBox = new HBox(12, chkSexoMacho, chkSexoFemea);
         sexoBox.setAlignment(Pos.CENTER);
+        chkSexoMacho.setStyle("-fx-text-fill: #444; -fx-font-weight: normal;");
+        chkSexoFemea.setStyle("-fx-text-fill: #444; -fx-font-weight: normal;");
 
         pesquisaBox.getChildren().addAll(txtPesquisaNome, txtDescricao, sexoBox, btnPesquisar);
 
-        galeriaGatos.setHgap(20);
-        galeriaGatos.setVgap(20);
-        galeriaGatos.setPadding(new Insets(20));
+        galeriaGatos.setHgap(18);
+        galeriaGatos.setVgap(18);
+        galeriaGatos.setPadding(new Insets(16));
         galeriaGatos.setAlignment(Pos.CENTER);
 
         ScrollPane scrollPane = new ScrollPane(galeriaGatos);
         scrollPane.setFitToWidth(true);
         scrollPane.setFitToHeight(true);
+        scrollPane.setStyle("-fx-background: transparent; -fx-background-color: transparent;");
 
         mainContainer.getChildren().addAll(pesquisaBox, scrollPane);
-        mainContainer.setStyle("-fx-background-color: #cce6ff;");
-
         root.setCenter(mainContainer);
     }
 
- public void atualizarCatalogo() {
-    galeriaGatos.getChildren().clear();
+    public void atualizarCatalogo() {
+        galeriaGatos.getChildren().clear();
 
-    List<Gato> gatos = controller.getGatosObservable();
+        List<Gato> gatos = controller.getGatosObservable();
 
-    if (gatos.isEmpty()) {
-        Label lblVazio = new Label("Nenhum gato cadastrado.");
-        lblVazio.setStyle("-fx-font-size: 16px;");
-        galeriaGatos.getChildren().add(lblVazio);
-    } else {
-        for (Gato gato : gatos) {
-            galeriaGatos.getChildren().add(criarCardGato(gato));
+        if (gatos.isEmpty()) {
+            Label lblVazio = new Label("Nenhum gato cadastrado.");
+            lblVazio.setStyle("-fx-font-size: 16px;");
+            galeriaGatos.getChildren().add(lblVazio);
+        } else {
+            for (Gato gato : gatos) {
+                galeriaGatos.getChildren().add(criarCardGato(gato));
+            }
         }
     }
-}
 
     private VBox criarCardGato(Gato gato) {
         VBox card = new VBox(10);
-        card.setPadding(new Insets(10));
+        card.setPadding(new Insets(12));
         card.setAlignment(Pos.CENTER);
-        card.setPrefWidth(200);
-        card.setStyle("-fx-background-color: white; -fx-border-color: #99ccff; -fx-border-radius: 5;");
+        card.setPrefWidth(170);
+        card.setStyle("-fx-background-color: #fff; -fx-border-color: #e0e0e0; -fx-border-width: 1px; -fx-effect: dropshadow(gaussian, #e0e0e0, 2, 0, 0, 1);");
 
         ImageView imageView = new ImageView();
-        imageView.setFitWidth(150);
-        imageView.setFitHeight(150);
-        imageView.setPreserveRatio(true);
+        imageView.setFitWidth(120);
+        imageView.setFitHeight(120);
+        imageView.setPreserveRatio(false);
+        imageView.setStyle("-fx-background-color: #fafafa; -fx-border-color: #e0e0e0; -fx-border-width: 1px;");
 
         try {
             if (gato.getCaminhoImagem() != null && !gato.getCaminhoImagem().equals("sem_imagem.png")) {
@@ -119,21 +127,19 @@ public class CatalogoView {
                 imageView.setImage(new Image(getClass().getResourceAsStream("/placeholder.png")));
             }
         } catch (Exception e) {
-            System.err.println("Erro ao carregar imagem: " + e.getMessage());
-            Rectangle placeholder = new Rectangle(150, 150);
-            placeholder.setStyle("-fx-fill: lightgray; -fx-stroke: gray; -fx-stroke-width: 1;");
+            Rectangle placeholder = new Rectangle(120, 120);
+            placeholder.setStyle("-fx-fill: #eaf6fb; -fx-stroke: rgba(242,148,230,0.45); -fx-stroke-width: 2;");
             card.getChildren().add(placeholder);
         }
 
-        if (imageView.getImage() != null) {
-            card.getChildren().add(imageView);
-        }
+        card.getChildren().add(imageView);
 
         Label lblNome = new Label(gato.getNome());
-        lblNome.setStyle("-fx-font-weight: bold; -fx-font-size: 14px;");
+        lblNome.setStyle("-fx-font-weight: bold; -fx-font-size: 15px; -fx-text-fill: #3c9ae7;");
 
         Button btnDetalhes = new Button("Detalhes");
         btnDetalhes.setOnAction(e -> abrirDetalhesGato(gato));
+        btnDetalhes.setStyle("-fx-background-color: rgb(179, 32, 159); -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 7px; -fx-padding: 6 18;");
 
         card.getChildren().addAll(lblNome, btnDetalhes);
 

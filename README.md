@@ -1,10 +1,10 @@
 # Projeto de Cadastro e Catalogação de Gatos
 
-Este projeto tem como objetivo criar um sistema para o cadastro e catalogação de gatos disponíveis para adoção. A aplicação permite que os usuários possam registrar informações sobre os gatos, como nome, cor, idade, localização, se são castrados, se estão vermifugados e outras características relevantes. Além disso, o sistema possui uma interface gráfica que facilita a interação com os dados, permitindo que os administradores e usuários gerenciem as informações de forma simples e eficaz.
+Este projeto tem como objetivo criar um sistema para o cadastro e catalogação de gatos disponíveis para adoção. A aplicação permite que os usuários possam registrar informações sobre os gatos, como nome, cor, idade, localização, se são castrados e se foram adotados. Além disso, o sistema possui uma interface gráfica que facilita a interação com os dados, permitindo que os administradores e usuários gerenciem as informações de forma simples e eficaz.
 
 ### Funcionalidades Principais
 
-- **Cadastro de Gatos**: Permite o cadastro de gatos com informações detalhadas, como nome, cor, idade, localização, características de adoção (castrado, vermifugado, etc.).
+- **Cadastro de Gatos**: Permite o cadastro de gatos com informações detalhadas, como nome, cor, idade, localização, características de adoção e castração.
 
 - **Gerenciamento de Gatos**: Os administradores poderão adicionar, editar e remover gatos do banco de dados.
 

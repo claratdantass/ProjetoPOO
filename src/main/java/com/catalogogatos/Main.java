@@ -17,7 +17,7 @@ public class Main extends Application {
         
         scene.getStylesheets().add(getClass().getResource("/style.css").toExternalForm());
         
-        primaryStage.setTitle("Catálogo de Gatos UFPB");
+        primaryStage.setTitle("Projeto da disciplina de POO");
         
         primaryStage.setScene(scene);
         primaryStage.show();

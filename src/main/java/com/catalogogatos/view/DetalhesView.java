@@ -59,81 +59,91 @@ public class DetalhesView {
     }
     
     private void setupUI() {
+
+        txtNome.setPrefWidth(250);
+        txtLocal.setPrefWidth(250);
+        txtCorPelagem.setPrefWidth(250);
+        txtDescricao.setPrefWidth(250);
+    
+        GridPane.setHgrow(txtNome, Priority.ALWAYS);
+        GridPane.setHgrow(txtLocal, Priority.ALWAYS);
+        GridPane.setHgrow(txtCorPelagem, Priority.ALWAYS);
+        GridPane.setHgrow(txtDescricao, Priority.ALWAYS);
+    
         VBox mainContainer = new VBox(10);
         mainContainer.setPadding(new Insets(20));
         mainContainer.setAlignment(Pos.CENTER);
-        
+    
         HBox contentContainer = new HBox(20);
         contentContainer.setAlignment(Pos.CENTER);
-        
+    
         VBox imageContainer = new VBox(10);
         imageContainer.setAlignment(Pos.CENTER);
-        
+    
         imageView.setFitWidth(200);
         imageView.setFitHeight(200);
         imageView.setPreserveRatio(true);
-        
+    
         imageContainer.getChildren().add(imageView);
-        
+    
         Button btnTrocarImagem = new Button("Trocar Imagem");
         btnTrocarImagem.setOnAction(e -> selecionarImagem());
-        
+    
         imageContainer.getChildren().add(btnTrocarImagem);
-        
+    
         VBox infoContainer = new VBox(15);
-        infoContainer.setAlignment(Pos.CENTER_LEFT);
-        
+        infoContainer.setAlignment(Pos.TOP_LEFT); 
+    
         GridPane form = new GridPane();
         form.setHgap(10);
         form.setVgap(10);
-        
+    
         form.add(new Label("Nome:"), 0, 0);
         form.add(txtNome, 1, 0);
-        
+    
         form.add(new Label("Local:"), 0, 1);
         form.add(txtLocal, 1, 1);
-        
+    
         form.add(new Label("Cor da Pelagem:"), 0, 2);
         form.add(txtCorPelagem, 1, 2);
-        
+    
         form.add(new Label("Sexo:"), 0, 3);
         HBox sexoContainer = new HBox(10, rbtnMacho, rbtnFemea);
         sexoContainer.setAlignment(Pos.CENTER_LEFT);
         form.add(sexoContainer, 1, 3);
-        
+    
         form.add(chkAdotado, 1, 4);
         form.add(chkCastrado, 1, 5);
-        
+    
         form.add(new Label("Descrição:"), 0, 6);
         form.add(txtDescricao, 1, 6);
         txtDescricao.setPrefRowCount(4);
-        
+    
         infoContainer.getChildren().add(form);
-        
+    
         HBox buttonBox = new HBox(10);
         buttonBox.setAlignment(Pos.CENTER);
-        
+    
         Button btnEditar = new Button("Editar");
         btnEditar.setOnAction(e -> editarGato());
         btnEditar.setStyle("-fx-background-color: #99ccff;");
-        
+    
         Button btnExcluir = new Button("Excluir");
         btnExcluir.setOnAction(e -> excluirGato());
-        btnExcluir.setStyle("-fx-background-color: #ff9999;");
-        
+        btnExcluir.setStyle("-fx-background-color: rgb(179, 32, 159);");
+    
         buttonBox.getChildren().addAll(btnEditar, btnExcluir);
-        
+    
         infoContainer.getChildren().add(buttonBox);
-        
+    
         contentContainer.getChildren().addAll(imageContainer, infoContainer);
-        
+    
         mainContainer.getChildren().add(contentContainer);
         mainContainer.setStyle("-fx-background-color: #cce6ff;");
-        
-        root.setCenter(mainContainer);
-
-    }
     
+        root.setCenter(mainContainer);
+    }
+
     private void carregarImagem() {
         try {
             if (gato.getCaminhoImagem() != null && !gato.getCaminhoImagem().equals("sem_imagem.png")) {
