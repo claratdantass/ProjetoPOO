@@ -28,17 +28,7 @@ public class MainController {
         gatosObservable.addAll(gatoService.obterTodosGatos());
     }
 
-    public void adicionarGato(String nome, String corPelagem, String sexo, boolean adotado, boolean castrado, String local, String descricao, String caminhoImagem) {
-        Gato gato = new Gato();
-        gato.setNome(nome);
-        gato.setCorPelagem(corPelagem);
-        gato.setSexo(sexo);
-        gato.setAdotado(adotado);
-        gato.setCastrado(castrado);
-        gato.setLocal(local);
-        gato.setDescricao(descricao);
-        gato.setCaminhoImagem(caminhoImagem);
-
+    public void adicionarGato(Gato gato) {
         gatoService.adicionarGato(gato);
         atualizarListaGatos();
     }
@@ -61,8 +51,16 @@ public class MainController {
         return gatoService.buscarPorNome(nome);
     }
 
-    public List<Gato> buscarGatosPorLocal(String local) {
-        return gatoService.buscarPorLocal(local);
+    public List<Gato> buscarGatos(String nome, String local) {
+        List<Gato> resultado = new ArrayList<>();
+        for (Gato gato : gatoService.obterTodosGatos()) {
+            boolean nomeMatch = nome.isEmpty() || gato.getNome().toLowerCase().contains(nome.toLowerCase());
+            boolean localMatch = local.isEmpty() || gato.getLocal().toLowerCase().contains(local.toLowerCase());
+            if (nomeMatch && localMatch) {
+                resultado.add(gato);
+            }
+        }
+        return resultado;
     }
 
     public List<Gato> buscarGatosPorFiltros(String nome, boolean sexoMacho, boolean sexoFemea, String descricao) {

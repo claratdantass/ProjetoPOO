@@ -9,7 +9,7 @@ import java.util.Optional;
 public class GatoService {
     private static final String JDBC_URL = "jdbc:postgresql://127.0.0.1:5432/poo_postegres";
     private static final String JDBC_USER = "SEU_USUARIO_AQUI";
-    private static final String JDBC_PASSWORD = "SENHA_AQUI";
+    private static final String JDBC_PASSWORD = "SUA_SENHA_AQUI";
 
     private Connection getConnection() throws SQLException {
         return DriverManager.getConnection(JDBC_URL, JDBC_USER, JDBC_PASSWORD);
@@ -144,15 +144,19 @@ public class GatoService {
         gato.setDescricao(rs.getString("descricao"));
         gato.setSexo(rs.getString("sexo"));
         gato.setCastrado(rs.getBoolean("castrado"));
-
-        gato.setLocal("");
-        gato.setCorPelagem("");
-        gato.setCaminhoImagem(null);
-
+        gato.setIdade(rs.getInt("idade"));
+        gato.setSaude(rs.getString("saude"));
+        gato.setVacinado(rs.getBoolean("vacinado"));
+        gato.setImagem(rs.getBytes("imagem"));
+        gato.setDisponivelParaAdocao(rs.getBoolean("disponivel_para_adocao"));
         gato.setCaminhoImagem(rs.getString("caminho_imagem"));
-
-        boolean disponivel = rs.getBoolean("disponivel_para_adocao");
-        gato.setAdotado(!disponivel);
+    
+        // Se quiser manter compatibilidade com campos não existentes, deixe como vazio ou trate de outra forma
+        // gato.setLocal(rs.getString("local")); // Só se existir no banco
+        // gato.setCorPelagem(rs.getString("cor_pelagem")); // Só se existir no banco
+    
+        // Adotado = !disponivel_para_adocao
+        gato.setAdotado(!rs.getBoolean("disponivel_para_adocao"));
         return gato;
     }
 }
