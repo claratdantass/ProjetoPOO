@@ -1,6 +1,6 @@
 # Projeto de Cadastro e Catalogação de Gatos
 
-Este projeto tem como objetivo criar um sistema para o cadastro e catalogação de gatos disponíveis para adoção. A aplicação permite que os usuários possam registrar informações sobre os gatos, como nome, cor, idade, localização, se são castrados e se foram adotados. Além disso, o sistema possui uma interface gráfica que facilita a interação com os dados, permitindo que os administradores e usuários gerenciem as informações de forma simples e eficaz.
+Este projeto tem como objetivo criar um sistema para o cadastro e catalogação de gatos abandonados no Campus da UFPB. A aplicação permite que os usuários possam registrar informações sobre os gatos, como nome, cor, idade, localização, se são castrados e se foram adotados. Além disso, o sistema possui uma interface gráfica que facilita a interação com os dados, permitindo que os administradores e usuários gerenciem as informações de forma simples e eficaz.
 
 ### Funcionalidades Principais
 
@@ -63,18 +63,19 @@ No código Java, ajuste a string de conexão conforme o seu ambiente:
    String password = "sua_senha";
    ```
 
+## Atalhos para Compilação e Execução
+
 8. Compile o Projeto Java
 
+Para facilitar, utilize os scripts abaixo (ajuste os caminhos nos arquivos conforme sua instalação):
+
    ```bash
-   javac --module-path /caminho/para/javafx-sdk-17.0.15/lib --add-modules javafx.controls,javafx.fxml \
-     -cp postgresql-42.7.5.jar -d out $(find src/main/java -name "*.java")
-   (Substitua os caminhos conforme sua instalação.)
+      ./compile.sh
    ```
 
 9. Execute a Interface Gráfica
    ```bash
-   java --module-path /caminho/para/javafx-sdk-17.0.15/lib --add-modules javafx.controls,javafx.fxml \
-     -cp out:postgresql-42.7.5.jar com.catalogogatos.Main
+      ./run.sh
    ```
 
 ## Observações
