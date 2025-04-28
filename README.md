@@ -6,7 +6,7 @@ Este projeto tem como objetivo criar um sistema para o cadastro e catalogação 
   <img src="https://github.com/user-attachments/assets/0564a393-a16d-425d-bf08-ca5176cfa371" width="22%" />
   <img src="https://github.com/user-attachments/assets/1d1b4106-1d9d-40f0-b187-b94cde9e64de" width="22%" />
   <img src="https://github.com/user-attachments/assets/365c2b3e-7751-4949-ab99-8cfbe51621e8" width="22%" />
-  <img src="https://github.com/user-attachments/assets/365c2b3e-7751-4949-ab99-8cfbe51621e8" width="22%" />
+  <img src="https://github.com/user-attachments/assets/a89aa08a-e0f3-496d-b605-9cf7e5c67b0b" width="22%" />
 </div>
 
 ### Funcionalidades Principais
