@@ -139,7 +139,7 @@ public class DetalhesView {
         contentContainer.getChildren().addAll(imageContainer, infoContainer);
     
         mainContainer.getChildren().add(contentContainer);
-        mainContainer.setStyle("-fx-background-color: #cce6ff;");
+        mainContainer.setStyle("-fx-background-color:rgb(218, 227, 236);");
     
         root.setCenter(mainContainer);
     }

@@ -106,13 +106,14 @@ public class CatalogoView {
         VBox card = new VBox(10);
         card.setPadding(new Insets(12));
         card.setAlignment(Pos.CENTER);
-        card.setPrefWidth(170);
+        card.setPrefWidth(250);
+        card.setPrefHeight(320);
         card.setStyle("-fx-background-color: #fff; -fx-border-color: #e0e0e0; -fx-border-width: 1px; -fx-effect: dropshadow(gaussian, #e0e0e0, 2, 0, 0, 1);");
 
         ImageView imageView = new ImageView();
-        imageView.setFitWidth(120);
-        imageView.setFitHeight(120);
-        imageView.setPreserveRatio(false);
+        imageView.setFitWidth(220);
+        imageView.setFitHeight(220);
+        imageView.setPreserveRatio(true);
         imageView.setStyle("-fx-background-color: #fafafa; -fx-border-color: #e0e0e0; -fx-border-width: 1px;");
 
         try {
@@ -127,7 +128,7 @@ public class CatalogoView {
                 imageView.setImage(new Image(getClass().getResourceAsStream("/placeholder.png")));
             }
         } catch (Exception e) {
-            Rectangle placeholder = new Rectangle(120, 120);
+            Rectangle placeholder = new Rectangle(220, 220);
             placeholder.setStyle("-fx-fill: #eaf6fb; -fx-stroke: rgba(242,148,230,0.45); -fx-stroke-width: 2;");
             card.getChildren().add(placeholder);
         }
