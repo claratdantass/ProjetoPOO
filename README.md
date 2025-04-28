@@ -1,6 +1,13 @@
-# Projeto de Cadastro e Catalogação de Gatos
+# 🐾 Projeto de Cadastro e Catalogação de Gatos
 
 Este projeto tem como objetivo criar um sistema para o cadastro e catalogação de gatos abandonados no Campus da UFPB. A aplicação permite que os usuários possam registrar informações sobre os gatos, como nome, cor, idade, localização, se são castrados e se foram adotados. Além disso, o sistema possui uma interface gráfica que facilita a interação com os dados, permitindo que os administradores e usuários gerenciem as informações de forma simples e eficaz.
+
+<div style="display: flex; justify-content: space-around;">
+  <img src="https://github.com/user-attachments/assets/0564a393-a16d-425d-bf08-ca5176cfa371" width="22%" />
+  <img src="https://github.com/user-attachments/assets/1d1b4106-1d9d-40f0-b187-b94cde9e64de" width="22%" />
+  <img src="https://github.com/user-attachments/assets/365c2b3e-7751-4949-ab99-8cfbe51621e8" width="22%" />
+  <img src="https://github.com/user-attachments/assets/365c2b3e-7751-4949-ab99-8cfbe51621e8" width="22%" />
+</div>
 
 ### Funcionalidades Principais
 
@@ -21,28 +28,24 @@ Este projeto tem como objetivo criar um sistema para o cadastro e catalogação 
 - **Controle de Versão**: Git
 
 
-## Como Rodar o Projeto
+## 💻 Como Rodar o Projeto
 
 1. Clone o repositório:
+   
    ```bash
    git clone [https://github.com/seuusuario/projeto-catalogacao-gatos.git](https://github.com/seuusuario/projeto-catalogacao-gatos.git)´
 
-2. Navegue até a pasta do projeto:
+3. Navegue até a pasta do projeto:
 
    ```bash
    cd projeto-catalogacao-gatos
    ```
 
-3. Dependências
-- Java 17+ (ou compatível)
-- JavaFX SDK: Download JavaFX
-- PostgreSQL: Download PostgreSQL
-- Driver JDBC PostgreSQL: Download JDBC
-- Baixe o driver JDBC do PostgreSQL (postgresql-42.x.x.jar) em https://jdbc.postgresql.org/download.html e coloque-o no diretório raiz do projeto.
-
 4. Configure o Banco de Dados PostgreSQL
+   
 - Certifique-se de que o PostgreSQL está instalado e rodando.
 - Crie um banco de dados (se ainda não existir):
+
    ```sql
    CREATE DATABASE catalogo_gatos;
    ```
@@ -63,16 +66,15 @@ No código Java, ajuste a string de conexão conforme o seu ambiente:
    String password = "sua_senha";
    ```
 
-## Atalhos para Compilação e Execução
+## 🔨 Atalhos para Compilação e Execução
 
 8. Compile o Projeto Java
 
-Para facilitar, utilize os scripts abaixo (ajuste os caminhos nos arquivos conforme sua instalação):
+   Para facilitar, utilize os scripts abaixo (ajuste os caminhos nos arquivos conforme sua instalação):
 
    ```bash
       ./compile.sh
    ```
-
 9. Execute a Interface Gráfica
    ```bash
       ./run.sh
@@ -81,4 +83,12 @@ Para facilitar, utilize os scripts abaixo (ajuste os caminhos nos arquivos confo
 ## Observações
 - O arquivo banco/tabela.sql cria e popula a tabela animais no banco de dados.
 - Certifique-se de que o driver JDBC está no classpath ao compilar e executar.
-- Se usar IDE (Eclipse, IntelliJ), configure o JavaFX e o JDBC nas propriedades do projeto.
+- Se usar IDE (Eclipse, IntelliJ), configure o JavaFX e o JDBC nas propriedades do projeto
+
+## 🤝 Membros da equipe
+Este projeto foi desenvolvido como parte da disciplina Programação Orientada à Objetos.
+
+- [Beatriz Pessôa](https://github.com/beapessoas)
+- [Emyle Santos](https://github.com/Emysntts)
+- [Clara Dantas](https://github.com/claratdantass)
+- [Gustavo Lacerda](https://github.com/LacerdaGustavo)
